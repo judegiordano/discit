@@ -14,7 +14,7 @@ export default $config({
     };
   },
   async run() {
-    const domain = "discitapp.com"
+    // const domain = "discitapp.com"
     const { stage } = $app;
     const environment = {
       STAGE: stage,
@@ -41,31 +41,34 @@ export default $config({
       memory: '1024 MB',
       timeout: '10 minutes',
       architecture: "arm64",
-      url: { cors: true, allowCredentials: true },
+      url: {
+        cors: true,
+        allowCredentials: true
+      },
       logging: { retention: '1 week', format: 'json' },
       environment,
       link: []
     });
 
-    const router = new sst.aws.Router('MyRouter', {
-      invalidation: false,
-      transform: {
-        cachePolicy: {
-          defaultTtl: 120,
-          minTtl: 120,
-          maxTtl: (60 * 5)
-        }
-      },
-      domain: {
-        name: `api.${domain}`,
-        redirects: [`www.api.${domain}`]
-      },
-      routes: { "/*": api.url }
-    });
+    // const router = new sst.aws.Router('MyRouter', {
+    //   invalidation: false,
+    //   transform: {
+    //     cachePolicy: {
+    //       defaultTtl: 120,
+    //       minTtl: 120,
+    //       maxTtl: (60 * 5)
+    //     }
+    //   },
+    //   domain: {
+    //     name: `api.${domain}`,
+    //     redirects: [`www.api.${domain}`]
+    //   },
+    //   routes: { "/*": api.url }
+    // });
 
     return {
       url: api.url,
-      route: router.url
+      // route: router.url
     }
   },
 });

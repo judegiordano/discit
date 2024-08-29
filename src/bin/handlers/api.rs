@@ -4,7 +4,7 @@ use lambda_http::Error;
 #[tokio::main]
 pub async fn main() -> Result<(), Error> {
     logger::init()?;
-    let app = axum::Router::new().nest("/", routes());
+    let app = axum::Router::new().nest("/api", routes());
     // bind to localhost when running cargo dev
     if cfg!(debug_assertions) {
         let listener = tokio::net::TcpListener::bind("127.0.0.1:3000").await?;
