@@ -36,6 +36,7 @@ export default $config({
     });
 
     const api = new sst.aws.Function('api', {
+      runtime: 'provided.al2023',
       handler: 'bootstrap',
       bundle: 'target/lambda/api',
       memory: '1024 MB',
