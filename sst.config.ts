@@ -19,8 +19,8 @@ export default $config({
     const { stage } = $app;
     const environment = {
       STAGE: stage,
-      AWS_REGION: 'us-east-1',
       LOG_LEVEL: process.env.LOG_LEVEL,
+      AWS_REGION: process.env.AWS_REGION,
       AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
       AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
       MONGO_URI: process.env.MONGO_URI,
