@@ -1,8 +1,6 @@
 
 /// <reference path='./.sst/platform/config.d.ts' />
 
-const domain = "discitapp.com"
-
 export default $config({
   app(input) {
     return {
@@ -16,6 +14,7 @@ export default $config({
     };
   },
   async run() {
+    const domain = "discitapp.com"
     const { stage } = $app;
     const environment = {
       STAGE: stage,
@@ -23,7 +22,7 @@ export default $config({
       MONGO_URI: process.env.MONGO_URI,
     }
 
-    const cron = new sst.aws.Cron('nightly-backup', {
+    new sst.aws.Cron('nightly-backup', {
       schedule: 'cron(0 0 * * ? *)',
       job: {
         logging: { retention: '1 week', format: 'json' },
@@ -50,10 +49,18 @@ export default $config({
 
     const router = new sst.aws.Router('MyRouter', {
       invalidation: false,
-      domain: `api.${domain}`,
-      routes: {
-        "/*": api.url
-      }
+      transform: {
+        cachePolicy: {
+          defaultTtl: 120,
+          minTtl: 120,
+          maxTtl: (60 * 5)
+        }
+      },
+      domain: {
+        name: `api.${domain}`,
+        redirects: [`www.api.${domain}`]
+      },
+      routes: { "/*": api.url }
     });
 
     return {
