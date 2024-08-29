@@ -39,7 +39,7 @@ export default $config({
     const api = new sst.aws.Function('api', {
       handler: 'bootstrap',
       bundle: 'target/lambda/api',
-      memory: '500 MB',
+      memory: '1024 MB',
       timeout: '10 minutes',
       architecture: "arm64",
       url: { cors: true, allowCredentials: true },
