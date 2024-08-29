@@ -1,6 +1,8 @@
 
 /// <reference path='./.sst/platform/config.d.ts' />
 
+const domain = "discitapp.com"
+
 export default $config({
   app(input) {
     return {
@@ -25,7 +27,7 @@ export default $config({
     }
 
     const cron = new sst.aws.Cron('nightly-backup', {
-      schedule: 'cron(0 0 0 * * *)',
+      schedule: 'cron(0 0 * * ? *)',
       job: {
         logging: { retention: '1 week', format: 'json' },
         environment,
