@@ -48,8 +48,17 @@ export default $config({
       link: []
     });
 
+    const router = new sst.aws.Router('MyRouter', {
+      invalidation: false,
+      domain: `api.${domain}`,
+      routes: {
+        "/*": api.url
+      }
+    });
+
     return {
       url: api.url,
+      route: router.url
     }
   },
 });
